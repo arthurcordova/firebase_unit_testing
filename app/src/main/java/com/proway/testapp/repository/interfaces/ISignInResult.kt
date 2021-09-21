@@ -1,4 +1,4 @@
-package com.proway.testapp.utils
+package com.proway.testapp.repository.interfaces
 
 interface ISignInResult {
     fun success(email: String, password: String)
