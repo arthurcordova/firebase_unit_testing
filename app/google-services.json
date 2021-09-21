@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "424215082687",
+    "project_id": "test-project-6ac7d",
+    "storage_bucket": "test-project-6ac7d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:424215082687:android:3067e346d30e6878da780a",
+        "android_client_info": {
+          "package_name": "com.proway.testapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "424215082687-1v2e3r3orv1542q1m18ensvf78lum4gb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9yIbyQ0jTRfBnlYYqw7B-eQeyYxXN0GM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "424215082687-1v2e3r3orv1542q1m18ensvf78lum4gb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
