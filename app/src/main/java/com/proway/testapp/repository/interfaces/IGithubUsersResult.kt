@@ -2,8 +2,9 @@ package com.proway.testapp.repository.interfaces
 
 interface IGithubUsersResult {
 
-    fun success()
-    fun failure()
-
+    fun successApi()
+    fun failureApi()
+    fun successFirebase()
+    fun failureFirebase()
 
 }
