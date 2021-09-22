@@ -15,4 +15,6 @@ class AuthenticationActivity : AppCompatActivity() {
                 .commitNow()
         }
     }
+
+
 }
