@@ -55,5 +55,6 @@ dependencies {
     testImplementation 'com.squareup.retrofit2:retrofit-mock:2.9.0'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2"
     testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation("org.mockito:mockito-inline:3.11.1")
 
 }
