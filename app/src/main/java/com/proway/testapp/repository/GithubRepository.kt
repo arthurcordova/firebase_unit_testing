@@ -24,6 +24,13 @@ class GithubRepository(
         if (response.isSuccessful) observer.successApi() else observer.failureApi()
     }
 
+    suspend fun fetchUsersWithCallBack(onComplete: (String) -> Unit) {
+        val response = withContext(Dispatchers.Default) {
+            api.fetchUsers()
+        }
+        if (response.isSuccessful) onComplete("Success") else onComplete("Failure")
+    }
+
     fun saveUserOnFirebase(user: GitUserModel) {
         val task = firebaseDb.collection(COLLECTION_NAME).add(user)
         if (task.isSuccessful) observer.successFirebase() else observer.failureApi()

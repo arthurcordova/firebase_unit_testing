@@ -22,11 +22,13 @@ import java.util.concurrent.Executor
 
 @RunWith(JUnit4::class)
 class FirebaseTest : ISignInResult {
+    @Mock
     private lateinit var successTask: Task<AuthResult>
+    @Mock
     private lateinit var failureTask: Task<AuthResult>
-
     @Mock
     private lateinit var firebaseAuth: FirebaseAuth
+
     private lateinit var authenticationRepository: AuthenticationRepository
 
     private var logInResult = UNDEF
@@ -41,136 +43,6 @@ class FirebaseTest : ISignInResult {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        successTask = object : Task<AuthResult>() {
-            override fun isComplete(): Boolean = true
-
-            override fun isSuccessful(): Boolean = true
-
-            override fun addOnCompleteListener(
-                executor: Executor,
-                onCompleteListener: OnCompleteListener<AuthResult>
-            ): Task<AuthResult> {
-                onCompleteListener.onComplete(successTask)
-                return successTask
-            }
-
-            override fun isCanceled(): Boolean = true
-
-            override fun getResult(): AuthResult? {
-                TODO("Not yet implemented")
-            }
-
-            override fun <X : Throwable?> getResult(p0: Class<X>): AuthResult? {
-                TODO("Not yet implemented")
-            }
-
-            override fun getException(): Exception? {
-                TODO("Not yet implemented")
-            }
-
-            override fun addOnSuccessListener(p0: OnSuccessListener<in AuthResult>): Task<AuthResult> {
-                return this
-
-            }
-
-            override fun addOnSuccessListener(
-                p0: Executor,
-                p1: OnSuccessListener<in AuthResult>
-            ): Task<AuthResult> {
-                TODO("Not yet implemented")
-            }
-
-            override fun addOnSuccessListener(
-                p0: Activity,
-                p1: OnSuccessListener<in AuthResult>
-            ): Task<AuthResult> {
-                TODO("Not yet implemented")
-            }
-
-            override fun addOnFailureListener(p0: OnFailureListener): Task<AuthResult> {
-                return this
-            }
-
-            override fun addOnFailureListener(
-                p0: Executor,
-                p1: OnFailureListener
-            ): Task<AuthResult> {
-                TODO("Not yet implemented")
-            }
-
-            override fun addOnFailureListener(
-                p0: Activity,
-                p1: OnFailureListener
-            ): Task<AuthResult> {
-                TODO("Not yet implemented")
-            }
-        }
-        failureTask = object : Task<AuthResult>() {
-            override fun isComplete(): Boolean = true
-
-            override fun isSuccessful(): Boolean = false
-
-            // ...
-            override fun addOnCompleteListener(
-                executor: Executor,
-                onCompleteListener: OnCompleteListener<AuthResult>
-            ): Task<AuthResult> {
-                onCompleteListener.onComplete(failureTask)
-                return failureTask
-            }
-
-            override fun isCanceled(): Boolean {
-                return false
-            }
-
-            override fun getResult(): AuthResult? {
-                return result
-            }
-
-            override fun <X : Throwable?> getResult(p0: Class<X>): AuthResult? {
-                return result
-            }
-
-            override fun getException(): Exception? {
-                return exception
-            }
-
-            override fun addOnSuccessListener(p0: OnSuccessListener<in AuthResult>): Task<AuthResult> {
-                return this
-            }
-
-            override fun addOnSuccessListener(
-                p0: Executor,
-                p1: OnSuccessListener<in AuthResult>
-            ): Task<AuthResult> {
-                return this
-            }
-
-            override fun addOnSuccessListener(
-                p0: Activity,
-                p1: OnSuccessListener<in AuthResult>
-            ): Task<AuthResult> {
-                return this
-            }
-
-            override fun addOnFailureListener(p0: OnFailureListener): Task<AuthResult> {
-                return this
-            }
-
-            override fun addOnFailureListener(
-                p0: Executor,
-                p1: OnFailureListener
-            ): Task<AuthResult> {
-                return this
-            }
-
-            override fun addOnFailureListener(
-                p0: Activity,
-                p1: OnFailureListener
-            ): Task<AuthResult> {
-                return this
-            }
-        }
         authenticationRepository = AuthenticationRepository(this, firebaseAuth)
     }
 
@@ -179,6 +51,7 @@ class FirebaseTest : ISignInResult {
     fun logInSuccess_test() {
         val email = "cool@cool.com"
         val password = "123456"
+        Mockito.`when`(successTask.isSuccessful).thenReturn(true)
         Mockito.`when`(firebaseAuth.signInWithEmailAndPassword(email, password))
             .thenReturn(successTask)
         authenticationRepository.signIn(email, password)
@@ -190,6 +63,7 @@ class FirebaseTest : ISignInResult {
     fun logInFailure_test() {
         val email = "cool@cool.com"
         val password = "123_456"
+        Mockito.`when`(failureTask.isSuccessful).thenReturn(false)
         Mockito.`when`(firebaseAuth.signInWithEmailAndPassword(email, password))
             .thenReturn(failureTask)
         authenticationRepository.signIn(email, password)
