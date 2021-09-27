@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.common.truth.Truth.assertThat
+import com.google.firebase.auth.FirebaseUser
 import com.proway.testapp.repository.interfaces.ISignInResult
 import org.junit.Before
 import org.junit.Test
@@ -28,6 +29,10 @@ class FirebaseTest : ISignInResult {
     private lateinit var failureTask: Task<AuthResult>
     @Mock
     private lateinit var firebaseAuth: FirebaseAuth
+    @Mock
+    private lateinit var authResult: AuthResult
+    @Mock
+    private lateinit var firebaseUser: FirebaseUser
 
     private lateinit var authenticationRepository: AuthenticationRepository
 
@@ -56,7 +61,24 @@ class FirebaseTest : ISignInResult {
             .thenReturn(successTask)
         authenticationRepository.signIn(email, password)
         assertThat(logInResult).isEqualTo(SUCCESS)
+    }
 
+    @Test
+    fun logInSuccess_with_callback_test() {
+        val email = "cool@cool.com"
+        val password = "123456"
+
+        Mockito.`when`(firebaseUser.email).thenReturn(email)
+        Mockito.`when`(successTask.isSuccessful).thenReturn(true)
+        Mockito.`when`(firebaseAuth.signInWithEmailAndPassword(email, password))
+            .thenReturn(successTask)
+        Mockito.`when`(successTask.result).thenReturn(authResult)
+        Mockito.`when`(authResult.user).thenReturn(firebaseUser)
+
+        val callback : (FirebaseUser?, String?) -> Unit = { user, error ->
+            assertThat(user?.email).isEqualTo(email)
+        }
+        authenticationRepository.signInWithCallback(email, password, callback)
     }
 
     @Test
