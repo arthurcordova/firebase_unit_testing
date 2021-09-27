@@ -9,7 +9,6 @@ import com.proway.testapp.model.GitUserModel
 import com.proway.testapp.repository.interfaces.IGithubUsersResult
 import com.proway.testapp.services.api.GithubAPI
 import kotlinx.coroutines.runBlocking
-import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
